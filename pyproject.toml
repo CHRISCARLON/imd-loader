@@ -1,6 +1,6 @@
 [project]
-name = "IMDLoader"
-version = "0.1.2"
+name = "IODLoader"
+version = "0.1.0"
 description = "Download and process English Indices of Deprivation data"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -8,7 +8,7 @@ license = { text = "MIT" }
 authors = [
     { name = "Chris Carlon" }
 ]
-keywords = ["indices-of-deprivation", "imd", "duckdb", "data-loading", "uk-statistics"]
+keywords = ["indices-of-deprivation", "iod", "duckdb", "data-loading", "uk-statistics"]
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
@@ -26,16 +26,16 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/CHRISCARLON/imd-loader"
-Repository = "https://github.com/CHRISCARLON/imd-loader"
-Issues = "https://github.com/CHRISCARLON/imd-loader/issues"
+Homepage = "https://github.com/CHRISCARLON/iod-loader"
+Repository = "https://github.com/CHRISCARLON/iod-loader"
+Issues = "https://github.com/CHRISCARLON/iod-loader/issues"
 
 [project.scripts]
-imd = "ImdLoader.cli:main"
+iod = "IodLoader.cli:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["ImdLoader"]
+packages = ["IodLoader"]

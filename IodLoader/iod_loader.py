@@ -1,10 +1,10 @@
 """
-IMD Loader - Python interface for loading IMD  data into a local DuckDB.
+IOD Loader - Python interface for loading Indices of Deprivation data into a local DuckDB.
 
 Usage:
-    from ImdLoader import imd_data_loader
+    from IodLoader import iod_data_loader
 
-    for status in imd_data_loader():
+    for status in iod_data_loader():
         print(status)
 """
 
@@ -18,48 +18,48 @@ import re
 
 
 # Config
-IMD_2025_URL = (
+IOD_2025_URL = (
     "https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025"
 )
 BASE_URL = "https://assets.publishing.service.gov.uk"
 DEFAULT_DATA_DIR = Path("data")
-DEFAULT_DB_PATH = Path("IMD2025.duckdb")
+DEFAULT_DB_PATH = Path("IOD2025.duckdb")
 
 
 # Custom Exceptions
-class IMDLoaderError(Exception):
-    """Base exception for IMD Loader errors."""
+class IODLoaderError(Exception):
+    """Base exception for IOD Loader errors."""
 
     pass
 
 
-class DownloadError(IMDLoaderError):
+class DownloadError(IODLoaderError):
     """Error downloading files."""
 
     pass
 
 
-class ExtractionError(IMDLoaderError):
+class ExtractionError(IODLoaderError):
     """Error extracting download links."""
 
     pass
 
 
-class LoadError(IMDLoaderError):
+class LoadError(IODLoaderError):
     """Error loading data into database."""
 
     pass
 
 
-def imd_data_loader(
+def iod_data_loader(
     data_dir: Path = DEFAULT_DATA_DIR,
     db_path: Path = DEFAULT_DB_PATH,
-    url: str = IMD_2025_URL,
+    url: str = IOD_2025_URL,
 ) -> Generator[Dict[str, Any], None, None]:
     """
     Main loader function.
 
-    Downloads and loads all IMD 2025 files into DuckDB.
+    Downloads and loads all Indices of Deprivation 2025 files into DuckDB.
 
     Yields status dictionaries with progress information.
 
@@ -290,7 +290,7 @@ def imd_data_loader(
 def load_with_progress(
     data_dir: Path = DEFAULT_DATA_DIR,
     db_path: Path = DEFAULT_DB_PATH,
-    url: str = IMD_2025_URL,
+    url: str = IOD_2025_URL,
 ) -> int:
     """
     Run the loader with formatted progress output.
@@ -305,7 +305,7 @@ def load_with_progress(
     """
     total_tables = 0
 
-    for status in imd_data_loader(data_dir, db_path, url):
+    for status in iod_data_loader(data_dir, db_path, url):
         stage = status.get("stage")
 
         if stage == "extracting":

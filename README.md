@@ -1,38 +1,47 @@
-# IMD 2025 Data Loader 🦆
+# IOD 2025 Data Loader 🦆
 
-A simple Python package for downloading and loading the latest English Indices of Deprivation 2025 data into DuckDB.
+A simple Python package and CLI for downloading and loading the latest English Indices of Deprivation 2025 data into DuckDB.
 
-IMD Source Data -> [Click Here](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025)
+IOD Source Data -> [Click Here](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025)
 
 ## Installation
 
 ```bash
-pip install imd-loader
+pip install iod-loader
 ```
 
 Or with uv:
 
 ```bash
-uv add imd-loader
+uv add iod-loader
 ```
 
 ## Quick Start
 
-### Simple Usage
+### CLI Usage (Recommended)
 
-Use in a Python script.
+Use the CLI tool to load and query the data directly.
+
+```bash
+# Load all IOD 2025 data
+iod load
+
+# List all tables
+iod list-tables
+
+# Query the data
+iod query "SELECT * FROM your_schema.your_table LIMIT 10"
+```
+
+### Python Library Usage
+
+Or use in a Python script.
 
 ```python
-from ImdLoader import load_with_progress
+from IodLoader import load_with_progress
 
 if __name__ == "__main__":
     load_with_progress()
-```
-
-Or use the cli tool to load directly.
-
-```bash
-imd load
 ```
 
 ## Database Structure
@@ -46,6 +55,12 @@ The loader creates a DuckDB database with the following structure:
 
 You can query the data through:
 
-- The cli tool
-- Via the package itself - just import 'query'
-- Via a local duckdb seesion - just run duckdb -ui in your terminal and attach the .duckdb file
+- **CLI tool**: `iod query "SELECT * FROM ..."`
+- **Python package**: Import `query` from `IodLoader`
+- **DuckDB CLI**: Run `duckdb IOD2025.duckdb` in your terminal
+
+### Example Query
+
+```bash
+iod query "SELECT * FROM file_2_iod2025_domains_of_deprivation.iod2025_domains LIMIT 10"
+```

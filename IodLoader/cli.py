@@ -1,16 +1,16 @@
 """
-CLI interface for IMD Loader.
+CLI interface for IOD Loader.
 
 Usage:
-    imd load                              # Load IMD data into DuckDB
-    imd list-tables                       # List all tables in the database
-    imd query "SELECT * FROM table"       # Execute a SQL query
+    iod load                              # Load Indices of Deprivation data into DuckDB
+    iod list-tables                       # List all tables in the database
+    iod query "SELECT * FROM table"       # Execute a SQL query
 """
 
 import argparse
 import sys
 from pathlib import Path
-from ImdLoader.imd_loader import (
+from IodLoader.iod_loader import (
     load_with_progress,
     list_tables,
     query,
@@ -20,7 +20,7 @@ from ImdLoader.imd_loader import (
 
 
 def cmd_load(args):
-    """Load IMD data into DuckDB."""
+    """Load Indices of Deprivation data into DuckDB."""
     data_dir = Path(args.data_dir) if args.data_dir else DEFAULT_DATA_DIR
     db_path = Path(args.db_path) if args.db_path else DEFAULT_DB_PATH
 
@@ -38,7 +38,7 @@ def cmd_list_tables(args):
 
     if not db_path.exists():
         print(f"Error: Database not found at {db_path}", file=sys.stderr)
-        print("Run 'imd load' first to create the database.", file=sys.stderr)
+        print("Run 'iod load' first to create the database.", file=sys.stderr)
         return 1
 
     try:
@@ -61,7 +61,7 @@ def cmd_query(args):
 
     if not db_path.exists():
         print(f"Error: Database not found at {db_path}", file=sys.stderr)
-        print("Run 'imd load' first to create the database.", file=sys.stderr)
+        print("Run 'iod load' first to create the database.", file=sys.stderr)
         return 1
 
     try:
@@ -76,15 +76,15 @@ def cmd_query(args):
 def main():
     """Main CLI entry point."""
     parser = argparse.ArgumentParser(
-        prog="imd",
-        description="IMD 2025 Data Loader - Download and load English Indices of Deprivation data into DuckDB",
+        prog="iod",
+        description="IOD 2025 Data Loader - Download and load English Indices of Deprivation data into DuckDB",
     )
 
     # Global options
     parser.add_argument(
         "--version",
         action="version",
-        version="%(prog)s 0.1.0",
+        version="%(prog)s 0.1.2",
     )
 
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
@@ -92,7 +92,7 @@ def main():
     # Load command
     load_parser = subparsers.add_parser(
         "load",
-        help="Download and load IMD 2025 data into DuckDB",
+        help="Download and load Indices of Deprivation 2025 data into DuckDB",
     )
     load_parser.add_argument(
         "--data-dir",
