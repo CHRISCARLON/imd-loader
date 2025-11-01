@@ -1,0 +1,38 @@
+[project]
+name = "imd-loader"
+version = "0.1.0"
+description = "Download and process English Indices of Deprivation data files"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Chris Carlon" }
+]
+keywords = ["indices-of-deprivation", "imd", "duckdb", "data-loading", "uk-statistics"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "requests==2.32.5",
+    "beautifulsoup4==4.14.0",
+    "duckdb==1.4.1",
+    "openpyxl==3.1.0",
+    "pandas==2.3.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/imd-2025-loader"
+Repository = "https://github.com/yourusername/imd-2025-loader"
+Issues = "https://github.com/yourusername/imd-2025-loader/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ImdLoader"]
