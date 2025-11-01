@@ -1,6 +1,6 @@
 [project]
 name = "IMDLoader"
-version = "0.1.0"
+version = "0.1.1"
 description = "Download and process English Indices of Deprivation data files"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -26,9 +26,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/imd-2025-loader"
-Repository = "https://github.com/yourusername/imd-2025-loader"
-Issues = "https://github.com/yourusername/imd-2025-loader/issues"
+Homepage = "https://github.com/CHRISCARLON/imd-loader"
+Repository = "https://github.com/CHRISCARLON/imd-loader"
+Issues = "https://github.com/CHRISCARLON/imd-loader/issues"
 
 [project.scripts]
 imd = "ImdLoader.cli:main"

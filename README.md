@@ -2,7 +2,7 @@
 
 A simple Python package for downloading and loading the latest English Indices of Deprivation 2025 data into DuckDB.
 
-Source Data -> [Click Here](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025)
+IMD Source Data -> [Click Here](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025)
 
 ## Installation
 
@@ -20,11 +20,19 @@ uv add imd-loader
 
 ### Simple Usage
 
+Use in a Python script.
+
 ```python
 from ImdLoader import load_with_progress
 
 if __name__ == "__main__":
     load_with_progress()
+```
+
+Or use the cli tool to load directly.
+
+```bash
+imd load
 ```
 
 ## Database Structure
@@ -33,11 +41,13 @@ The loader creates a DuckDB database with the following structure:
 
 - **Schemas**: Named after the Excel filename
 - **Tables**: Named after the Excel sheet names
-- **Notes sheets**: Automatically skipped
+
+E.g. File_2_IoD2025_Domains_of_Deprivation.IoD2025_Domains
 
 ## Query Data
 
-```sql
-SELECT *
-FROM File_2_IoD2025_Domains_of_Deprivation.IoD2025_Domains;
-```
+You can query the data through:
+
+- The cli tool
+- Via the package itself - just import 'query'
+- Via a local duckdb seesion - just run ducdb -ui in your termianal and attach the .duckdb file
