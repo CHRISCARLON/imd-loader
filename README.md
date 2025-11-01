@@ -42,12 +42,10 @@ The loader creates a DuckDB database with the following structure:
 - **Schemas**: Named after the Excel filename
 - **Tables**: Named after the Excel sheet names
 
-E.g. File_2_IoD2025_Domains_of_Deprivation.IoD2025_Domains
-
-## Query Data
+## Querying the Data
 
 You can query the data through:
 
 - The cli tool
 - Via the package itself - just import 'query'
-- Via a local duckdb seesion - just run ducdb -ui in your termianal and attach the .duckdb file
+- Via a local duckdb seesion - just run duckdb -ui in your terminal and attach the .duckdb file
