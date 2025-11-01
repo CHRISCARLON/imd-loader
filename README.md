@@ -1,4 +1,4 @@
-# IoD 2025 Data Loader 🦆
+# IMD 2025 Data Loader 🦆
 
 A simple Python package for downloading and loading the latest English Indices of Deprivation 2025 data into DuckDB.
 
