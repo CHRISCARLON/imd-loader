@@ -26,6 +26,12 @@ Use the CLI tool to load and query the data directly.
 # Load all IOD 2025 data
 iod load
 
+# Load locally and push to MotherDuck
+iod load --motherduck
+
+# Load and push to MotherDuck with custom database name
+iod load --motherduck --motherduck-db my_iod_db
+
 # List all tables
 iod list-tables
 
@@ -50,6 +56,56 @@ The loader creates a DuckDB database with the following structure:
 
 - **Schemas**: Named after the Excel filename
 - **Tables**: Named after the Excel sheet names
+
+## MotherDuck Integration
+
+You can push your local DuckDB database to MotherDuck for cloud-based querying and sharing.
+
+### Setup & Authentication
+
+Get your MotherDuck token from [motherduck.com](https://motherduck.com), then choose one of these authentication methods:
+
+#### Option 1: Environment Variable (Recommended)
+
+```bash
+export motherduck_token='your_token_here'
+iod load --motherduck
+```
+
+#### Option 2: CLI Argument
+
+```bash
+iod load --motherduck --motherduck-token 'your_token_here'
+```
+
+#### Option 3: Interactive Browser Auth
+
+```bash
+# Just run without a token - DuckDB will open a browser for authentication
+iod load --motherduck
+```
+
+### Usage Examples
+
+```bash
+# Load data locally and push to MotherDuck (uses env var or browser auth)
+iod load --motherduck
+
+# Use token directly in command
+iod load --motherduck --motherduck-token 'your_token'
+
+# Specify custom database name in MotherDuck
+iod load --motherduck --motherduck-db my_custom_name
+
+# All options together
+iod load --motherduck --motherduck-token 'token' --motherduck-db my_iod_data
+```
+
+The process:
+
+1. Downloads and loads all data into a local DuckDB file
+2. Pushes the complete database to MotherDuck
+3. Your data is now available in the cloud!
 
 ## Querying the Data
 

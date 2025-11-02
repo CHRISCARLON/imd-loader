@@ -2,9 +2,16 @@
 CLI interface for IOD Loader.
 
 Usage:
-    iod load                              # Load Indices of Deprivation data into DuckDB
-    iod list-tables                       # List all tables in the database
-    iod query "SELECT * FROM table"       # Execute a SQL query
+    iod load                                      # Load Indices of Deprivation data into DuckDB
+    iod load --motherduck                         # Load locally, then push to MotherDuck
+    iod load --motherduck --motherduck-db mydb    # Push to MotherDuck with custom name
+    iod list-tables                               # List all tables in the database
+    iod query "SELECT * FROM table"               # Execute a SQL query
+
+MotherDuck Authentication (choose one):
+    1. Environment variable: export motherduck_token='your_token_here'
+    2. CLI argument: iod load --motherduck --motherduck-token 'your_token_here'
+    3. Interactive: Let DuckDB open a browser for authentication
 """
 
 import argparse
@@ -14,6 +21,7 @@ from IodLoader.iod_loader import (
     load_with_progress,
     list_tables,
     query,
+    push_to_motherduck,
     DEFAULT_DATA_DIR,
     DEFAULT_DB_PATH,
 )
@@ -26,6 +34,20 @@ def cmd_load(args):
 
     try:
         load_with_progress(data_dir=data_dir, db_path=db_path)
+
+        # Push to MotherDuck if flag is set
+        if args.motherduck:
+            print(f"\nPushing database to MotherDuck...")
+            motherduck_db = args.motherduck_db or "iod2025"
+            motherduck_token = args.motherduck_token if hasattr(args, 'motherduck_token') else None
+            push_to_motherduck(
+                db_path=db_path,
+                remote_db_name=motherduck_db,
+                token=motherduck_token
+            )
+            print(f"✓ Database uploaded to MotherDuck as '{motherduck_db}'")
+            print(f"  Connect with: duckdb -c 'ATTACH \"md:{motherduck_db}\"'")
+
         return 0
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
@@ -103,6 +125,21 @@ def main():
         "--db-path",
         type=str,
         help=f"Path to DuckDB database (default: {DEFAULT_DB_PATH})",
+    )
+    load_parser.add_argument(
+        "--motherduck",
+        action="store_true",
+        help="Push the database to MotherDuck after local load completes",
+    )
+    load_parser.add_argument(
+        "--motherduck-db",
+        type=str,
+        help="Name for the MotherDuck database (default: iod2025)",
+    )
+    load_parser.add_argument(
+        "--motherduck-token",
+        type=str,
+        help="MotherDuck authentication token (uses $motherduck_token env var if not provided)",
     )
     load_parser.set_defaults(func=cmd_load)
 

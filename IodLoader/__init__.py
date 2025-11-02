@@ -21,6 +21,7 @@ from IodLoader.iod_loader import (
     load_with_progress,
     list_tables,
     query,
+    push_to_motherduck,
     IODLoaderError,
     DownloadError,
     ExtractionError,
@@ -35,6 +36,7 @@ __all__ = [
     "load_with_progress",
     "list_tables",
     "query",
+    "push_to_motherduck",
     "IODLoaderError",
     "DownloadError",
     "ExtractionError",
@@ -44,4 +46,4 @@ __all__ = [
     "IOD_2025_URL",
 ]
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"

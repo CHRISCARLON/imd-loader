@@ -355,3 +355,56 @@ def query(sql: str, db_path: Path = DEFAULT_DB_PATH) -> pd.DataFrame:
     result = con.execute(sql).df()
     con.close()
     return result
+
+
+def push_to_motherduck(
+    db_path: Path = DEFAULT_DB_PATH,
+    remote_db_name: str = "iod2025",
+    token: str | None = None,
+) -> None:
+    """
+    Push a local DuckDB database to MotherDuck.
+
+    This requires authentication to MotherDuck. 
+    
+    You can either:
+    1. Set the motherduck_token environment variable
+    2. Pass the token directly via the token parameter
+    3. Allow DuckDB to prompt for interactive browser authentication
+
+    Args:
+        db_path: Path to the local DuckDB database file
+        remote_db_name: Name for the database in MotherDuck
+        token: Optional MotherDuck token (uses env var if not provided)
+
+    Raises:
+        LoadError: If the upload fails
+
+    Example:
+        export motherduck_token='your_token_here'
+        push_to_motherduck(Path("IOD2025.duckdb"), "iod2025")
+
+        # Or pass token directly
+        push_to_motherduck(Path("IOD2025.duckdb"), "iod2025", token="my_token")
+    """
+    if not db_path.exists():
+        raise LoadError(f"Local database not found at {db_path}")
+
+    try:
+        # Connect to MotherDuck with optional token
+        if token:
+            connection_string = f"md:?motherduck_token={token}"
+        else:
+            connection_string = "md:"
+
+        con = duckdb.connect(connection_string)
+
+        # Upload the local database to MotherDuck
+        # This uses the MotherDuck feature to create a database from a local file
+        con.execute(
+            f"CREATE OR REPLACE DATABASE {remote_db_name} FROM '{db_path.absolute()}'"
+        )
+
+        con.close()
+    except Exception as e:
+        raise LoadError(f"Failed to push database to MotherDuck: {e}") from e

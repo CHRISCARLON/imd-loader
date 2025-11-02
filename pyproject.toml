@@ -1,6 +1,6 @@
 [project]
 name = "IODLoader"
-version = "0.1.0"
+version = "0.1.1"
 description = "Download and process English Indices of Deprivation data"
 readme = "README.md"
 requires-python = ">=3.10"
